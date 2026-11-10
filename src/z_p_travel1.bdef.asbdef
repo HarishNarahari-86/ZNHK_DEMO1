@@ -14,6 +14,8 @@ define behavior for z_p_travel1 alias TRAVEL
   use action Discard;
   use action Prepare;
 
+  use action copytravel;
+
   use association _booking { create; }
 }
 

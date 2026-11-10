@@ -9,6 +9,7 @@ lock master
 total etag Lastchangedat
 authorization master ( instance )
 etag master Lastchangedat
+early numbering
 {
   create ( authorization : global );
   update;
@@ -24,6 +25,8 @@ etag master Lastchangedat
   draft action Resume;
   draft action Discard;
   draft determine action Prepare;
+
+  action copytravel result [1] $self;
 
   mapping for /dmo/travel
     {

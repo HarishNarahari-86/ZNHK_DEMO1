@@ -57,6 +57,7 @@ define root view entity z_p_travel1
       @UI.identification: [{ position: 90 }]
       Status,
 
+      @UI.lineItem: [{ position: 10, label: 'Copy Travel', type: #FOR_ACTION, dataAction: 'copytravel' }]
       Createdby,
       Createdat,
       Lastchangedby,
