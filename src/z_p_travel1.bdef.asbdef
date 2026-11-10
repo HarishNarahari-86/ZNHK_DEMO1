@@ -1,0 +1,26 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for z_p_travel1 alias TRAVEL
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Resume;
+  use action Discard;
+  use action Prepare;
+
+  use association _booking { create; }
+}
+
+define behavior for z_p_book1 alias BOOKING
+{
+  use update;
+  use delete;
+
+  use association _travel;
+}

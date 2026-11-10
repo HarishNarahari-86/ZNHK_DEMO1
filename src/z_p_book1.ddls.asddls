@@ -15,23 +15,26 @@ define view entity z_p_book1
   key BookingId,
 
       @UI.identification: [{ position: 30 }]
-//      @Consumption.valueHelpDefinition: [{ entity: {name: '',element: '' } }]
       BookingDate,
 
       @UI.lineItem: [{ position: 30 }]
       @UI.identification: [{ position: 40 }]
       @ObjectModel.text.element: [ 'customer' ]
+      @Consumption.valueHelpDefinition: [{ entity: {name: '/DMO/I_Customer',element: 'CustomerID'} }]
       CustomerId,
-      _customer.LastName as customer,
+      _customer.FirstName as customer,
 
       @UI.lineItem: [{ position: 40 }]
       @UI.identification: [{ position: 50 }]
       @ObjectModel.text.element: [ 'carrier' ]
+      @Consumption.valueHelpDefinition: [{ entity: {name: '/DMO/I_Carrier',element: 'AirlineID'} }]
       CarrierId,
       _carrier.Name as carrier,
 
       @UI.lineItem: [{ position: 50 }]
       @UI.identification: [{ position: 60 }]
+      @Consumption.valueHelpDefinition: [{ entity: {name: '/DMO/I_Connection',element: 'ConnectionID'},
+                                           additionalBinding: [{ localElement: 'CarrierId', element: 'AirlineID' }]}]
       ConnectionId,
 
       @UI.identification: [{ position: 70 }]

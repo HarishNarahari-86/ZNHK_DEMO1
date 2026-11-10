@@ -1,21 +1,52 @@
-managed implementation in class zbp_i_travel1 unique;
+managed implementation in class zCL_i_travel1 unique;
 strict ( 2 );
+with draft;
 
-define behavior for z_i_travel1 //alias <alias_name>
+define behavior for z_i_travel1 alias TRAVEL
 persistent table /dmo/travel
+draft table ztravel_drft1
 lock master
+total etag Lastchangedat
 authorization master ( instance )
-//etag master <field_name>
+etag master Lastchangedat
 {
   create ( authorization : global );
   update;
   delete;
   field ( readonly ) TravelId;
   association _booking { create; }
+
+  determination end_date on save { create; field EndDate; }
+
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Resume;
+  draft action Discard;
+  draft determine action Prepare;
+
+  mapping for /dmo/travel
+    {
+      TravelId      = travel_id;
+      AgencyId      = agency_id;
+      BeginDate     = begin_date;
+      BookingFee    = booking_fee;
+      Createdat     = createdat;
+      Createdby     = createdby;
+      CurrencyCode  = currency_code;
+      CustomerId    = customer_id;
+      Description   = description;
+      EndDate       = end_date;
+      Lastchangedat = lastchangedat;
+      Lastchangedby = lastchangedby;
+      Status        = status;
+      TotalPrice    = total_price;
+    }
 }
 
-define behavior for z_i_book1 //alias <alias_name>
+define behavior for z_i_book1 alias BOOKING
 persistent table /dmo/booking_m
+draft table zbook_drft1
 lock dependent by _travel
 authorization dependent by _travel
 //etag master <field_name>
@@ -24,4 +55,20 @@ authorization dependent by _travel
   delete;
   field ( readonly ) TravelId, BookingId;
   association _travel;
+
+  mapping for /dmo/booking_m
+    {
+      BookingDate   = booking_date;
+      BookingId     = booking_id;
+      BookingStatus = booking_status;
+      CarrierId     = carrier_id;
+      ConnectionId  = connection_id;
+      CurrencyCode  = currency_code;
+      CustomerId    = customer_id;
+      FlightDate    = flight_date;
+      FlightPrice   = flight_price;
+      LastChangedAt = last_changed_at;
+      TravelId      = travel_id;
+    }
+
 }
