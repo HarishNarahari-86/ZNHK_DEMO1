@@ -1,0 +1,9 @@
+@EndUserText.label: 'service definition Travel1'
+define service Zui_travel1_sdef {
+  expose z_p_travel1;
+  expose /DMO/I_Agency;
+  expose /DMO/I_Customer;
+  expose z_p_book1;
+  expose /DMO/I_Carrier;
+  expose /DMO/I_Connection;
+}
