@@ -7,8 +7,8 @@ define root view entity z_i_travel1
   as select from /dmo/travel as _travel
   association [1] to /DMO/I_Agency   as _agency   on $projection.AgencyId = _agency.AgencyID
   association [1] to /DMO/I_Customer as _customer on $projection.CustomerId = _customer.CustomerID
-  
-  composition [1..*] of z_i_book1 as _booking
+
+  composition [1..*] of z_i_book1    as _booking
 {
 
   key travel_id     as TravelId,
@@ -23,6 +23,14 @@ define root view entity z_i_travel1
       currency_code as CurrencyCode,
       description   as Description,
       status        as Status,
+
+      case status
+      when  'N' then 1
+      when  'B' then 2
+      when  'P' then 3
+      when  'X' then 5
+      else 0
+      end           as statuscritical,
 
 
       createdby     as Createdby,

@@ -15,20 +15,37 @@ early numbering
   update;
   delete;
   field ( readonly ) TravelId;
-  association _booking { create; }
+  field ( features : instance ) AgencyId, CustomerId;
+  association _booking { create; with draft; }
 
   determination end_date on save { create; field EndDate; }
+
+  validation validate_mandatory on save { create; update; field AgencyId, CustomerId; }
+
+  validation VALIDATE_TRAVEL on save { create; update; field BookingFee, TotalPrice, Status, BeginDate, EndDate; }
+
+  side effects
+  {
+    field BookingFee affects messages;
+    field TotalPrice affects messages;
+    field Status affects messages;
+    field EndDate affects messages;
+    field AgencyId affects messages;
+    field CustomerId affects messages;
+  }
 
 
   draft action Edit;
   draft action Activate optimized;
   draft action Resume;
   draft action Discard;
-  draft determine action Prepare;
+  draft determine action Prepare
+  { validation VALIDATE_TRAVEL;
+    validation validate_mandatory; }
 
   action copytravel result [1] $self;
 
-  mapping for /dmo/travel
+  mapping for /dmo/travel // #ec bdef_mapping
     {
       TravelId      = travel_id;
       AgencyId      = agency_id;
@@ -52,12 +69,12 @@ persistent table /dmo/booking_m
 draft table zbook_drft1
 lock dependent by _travel
 authorization dependent by _travel
-//etag master <field_name>
+etag master LastChangedAt
 {
   update;
   delete;
   field ( readonly ) TravelId, BookingId;
-  association _travel;
+  association _travel { with draft; }
 
   mapping for /dmo/booking_m
     {

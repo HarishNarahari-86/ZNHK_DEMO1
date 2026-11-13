@@ -53,9 +53,10 @@ define root view entity z_p_travel1
       @UI.identification: [{ position: 80 }]
       Description,
 
-      @UI.lineItem: [{ position: 50 }]
-      @UI.identification: [{ position: 90 }]
+      @UI.lineItem: [{ position: 50, criticality: 'statuscritical', criticalityRepresentation: #WITH_ICON }]
+      @UI.identification: [{ position: 90, criticality: 'statuscritical', criticalityRepresentation: #WITH_ICON }]
       Status,
+      statuscritical,
 
       @UI.lineItem: [{ position: 10, label: 'Copy Travel', type: #FOR_ACTION, dataAction: 'copytravel' }]
       Createdby,
