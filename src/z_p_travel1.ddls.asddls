@@ -4,6 +4,7 @@
 @UI.headerInfo.typeName: 'Travel'
 @UI.headerInfo.typeNamePlural: 'Travel Details'
 
+
 define root view entity z_p_travel1
   as projection on z_i_travel1
 {
@@ -55,6 +56,8 @@ define root view entity z_p_travel1
 
       @UI.lineItem: [{ position: 50, criticality: 'statuscritical', criticalityRepresentation: #WITH_ICON }]
       @UI.identification: [{ position: 90, criticality: 'statuscritical', criticalityRepresentation: #WITH_ICON }]
+      @UI.selectionField: [{ position: 40 }]
+      @Consumption.valueHelpDefinition: [{ entity: {name: '/DMO/I_Travel_Status_VH',element: 'TravelStatus'} }]
       Status,
       statuscritical,
 

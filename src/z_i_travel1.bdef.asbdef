@@ -19,6 +19,7 @@ early numbering
   association _booking { create; with draft; }
 
   determination end_date on save { create; field EndDate; }
+  determination status on modify { create; field status; }
 
   validation validate_mandatory on save { create; update; field AgencyId, CustomerId; }
 

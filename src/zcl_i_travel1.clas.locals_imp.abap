@@ -16,6 +16,8 @@ CLASS lhc_TRAVEL DEFINITION INHERITING FROM cl_abap_behavior_handler.
       keys REQUEST requested_features FOR travel RESULT result.
     METHODS validate_mandatory FOR VALIDATE ON SAVE
        keys FOR travel~validate_mandatory.
+    METHODS status FOR DETERMINE ON MODIFY
+       keys FOR travel~status.
     METHODS earlynumbering_create FOR NUMBERING
        entities FOR CREATE travel.
 
@@ -265,41 +267,38 @@ CLASS lhc_TRAVEL IMPLEMENTATION.
 
   ENDMETHOD.
 
+  METHOD status.
 
+    READ ENTITIES OF z_i_travel1 IN LOCAL MODE
+    ENTITY travel
+    FIELDS ( status )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_status).
 
+    DATA : lt_create_status TYPE TABLE FOR UPDATE z_i_travel1.
 
+    LOOP AT lt_Status INTO DATA(ls_status).
 
+      IF ls_Status-Status IS INITIAL.
+        lt_create_status = VALUE #( (
+                           %tky = ls_status-%tky
+*    %is_draft = ls_status-%is_draft
+                           Status = 'N'
+                           %control-Status = if_abap_behv=>mk-on
 
+        ) ).
 
+      ENDIF.
 
+    ENDLOOP.
 
+    MODIFY ENTITIES OF z_i_travel1 IN LOCAL MODE
+    ENTITY travel
+    UPDATE FROM lt_create_status
+    MAPPED DATA(lt_mapped)
+    FAILED DATA(lt_failed)
+    REPORTED DATA(lt_reported).
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  ENDMETHOD.
 
 ENDCLASS.

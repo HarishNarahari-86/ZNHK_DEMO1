@@ -25,10 +25,10 @@ define root view entity z_i_travel1
       status        as Status,
 
       case status
-      when  'N' then 1
-      when  'B' then 2
-      when  'P' then 3
-      when  'X' then 5
+      when  'N' then 5
+      when  'B' then 3
+      when  'P' then 2
+      when  'X' then 1
       else 0
       end           as statuscritical,
 
